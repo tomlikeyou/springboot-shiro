@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<link>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>用户首页</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <script th:src="@{/js/jquery-2.2.4.js}"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/ztree/zTreeStyle.css}"/>
+    <script th:src="@{/ztree/jquery.ztree.all.min.js}"></script>
+    <script th:src="@{/ztree/jquery.ztree.core.min.js}"></script>
+    <script th:src="@{/ztree/jquery.ztree.excheck.min.js}"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">Logo</a>
+    <!-- Links -->
+    <ul class="navbar-nav">
+        <!-- Dropdown -->
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                <img th:src="@{/images/user.png}" alt="user" style="width: 20px; height: inherit;">
+                <shiro:authenticated>
+                    <shiro:principal/>
+                </shiro:authenticated>
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Link 1</a>
+                <a class="dropdown-item" href="#">Link 2</a>
+                <a class="dropdown-item" href="/user/logout">退出登录</a>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div>
+                <ul class="ztree" id="ztreedemo">
+                </ul>
+            </div>
+        </div>
+        <!--内容显示栏-->
+        <div class="col-md-10 formBox" id="selUser">
+            <div class="row bg-warning" style="height: 140px;">
+                <form class="form-inline" action="/users" method="get">
+                    <div class="form-group">
+                        <label for="user">用户名:</label>&nbsp;&nbsp;
+                        <input type="text" name="userName" class="form-control" id="user">
+                    </div>&nbsp;&nbsp;
+                    <div class="form-group">
+                        <label for="status">用户状态:</label>&nbsp;&nbsp;
+                        <select class="form-control" id="status" name="status">
+                            <option value="">请选择</option>
+                            <option th:each="sta :${statuses}" th:value="${sta}" th:text="${sta} =='1'?'正常':'停用'">1
+                            </option>
+                        </select>
+                    </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="form-group" style="width:220px;">
+                        <label for="sel1">所在部门:</label>
+                        <select class="form-control" name="deptId" id="sel1" style="width: 150px;">
+                            <option value="">请选择</option>
+                            <option style="width:60px;" th:each=" dept :${depts}" th:value="${dept.deptId}"
+                                    th:text="${dept.deptName}"></option>
+                        </select>
+                    </div>&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-primary">查询</button>
+                </form>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">添加</button>
+            </div>
+            <!-- 添加模态框开始 -->
+            <div class="modal fade" id="addModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- 模态框头部 -->
+                        <div class="modal-header">
+                            <h5 class="modal-title">添加用户</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <!-- 模态框主体 -->
+                        <div class="modal-body">
+
+                        </div>
+                        <!-- 模态框底部 -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">提交</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--添加模态框结束-->
+            <!--内容显示区开始-->
+            <div class="row" style="height: 60%;">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>用户名</th>
+                        <th>性别</th>
+                        <td>状态</td>
+                        <th>联系方式</th>
+                        <th>邮箱</th>
+                        <th>所在部门</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr id="users" th:each="user :${users.list}">
+                        <td class="userId" th:value="${user.userId}" style="display: none;"></td>
+                        <td th:text="${user.userName}"></td>
+                        <td th:value="${user.sex}" th:text="${user.sex}=='1'?'女':'男'"></td>
+                        <td th:text="${user.status}==1 ? '正常':'停用'"></td>
+                        <td th:text="${user.phone}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td th:value="${user.deptId}" th:text="${user.dept.deptName}"></td>
+                        <td>
+                            <button type="button" th:tValue="${user.userId}" data-toggle="modal"
+                                    data-target="#updateModal" class="btn btn-outline-info btn-update">修改
+                            </button>
+                            <button type="button" class="btn btn-danger" onclick="deleteUser({user.userId})">删除</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--内容显示区结束-->
+            <!--修改模态框开始-->
+            <div class="modal fade" id="updateModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- 模态框头部 -->
+                        <div class="modal-header">
+                            <h5 class="modal-title">修改用户</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <!-- 模态框主体 -->
+                        <div class="modal-body">
+                            <div class="container">
+                                <form action="/user" method="post" class="update-form">
+                                    <div class="form-group">
+                                        <label for="user">用户名:</label>&nbsp;&nbsp;
+                                        <input type="text" name="userName" class="form-control update-name" value="">
+                                        <input type="hidden" name="_method" value="PUT">
+                                    </div>
+                                    性别：
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" id="manRadio" checked="checked" name="sex">
+                                        <label class="custom-control-label" for="manRadio">男</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" id="womenRadio" name="sex">
+                                        <label class="custom-control-label" for="womenRadio">女</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="editPhone">联系方式:</label>
+                                        <input type="text" id="editPhone" name="phone" class="form-control update-phone" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="editMail">邮箱:</label>
+                                        <input type="text" id="editMail" name="phone" class="form-control update-email" value="">
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                        <!-- 模态框底部 -->
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="submit" onclick="update();">更改</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--修改模态框结束-->
+            <!--分页导航条开始-->
+            <div class="row bg-dark" style="height: 8%">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </div>
+        </div>
+        <!--分页导航条结束-->
+    </div>
+</div>
+</body>
+<script>
+    var setting;
+    setting = {
+        view: {
+            selectedMulti: false,
+            showLine: false
+        },
+        data: {
+            key: {
+                name: "menuName",
+                children: "childrenList"
+            },
+            simpleData: {
+                enable: true,
+                idKey: "menuId",
+                pIdKey: "parentId",
+                rootPId: 0
+            }
+        },
+        check: {
+            enable: true,  //true false 分别表示 显示 、不显示 复选框或单选框
+            chkboxType: {"Y": "s", "N": "ps"} //选择复选框后对父子级关系是否影响
+        }/*,
+        callback: {
+            //点击复选框之后调用函数
+            onCheck: zTreeOnCheck
+        }*/
+    };
+    var ztreeObj;
+    /*  $(function () {
+          var zNodes;
+          $.ajax({
+              url: "/menu/menulist",
+              type: "get",
+              dataType: "json",
+              success: function (data) {
+                  ztreeObj = $.fn.zTree.init($("#ztreedemo"), setting, data);
+                  var trreobj = $.fn.zTree.getZTreeObj("ztreedemo");
+
+                  var nodes2 = ztreeObj.getNodesByParam("level", 1);
+                  for (var j = 0; j < nodes2.length; j++) {
+                      ztreeObj.removeChildNodes(nodes2[j]);
+                  }
+              },
+              error: function () {
+                  alert("出错了");
+              }
+          });
+          // $('.formBox').css('display','none');
+      });*/
+
+    $('.btn-update').click(function (e) {
+        console.log(e.target.attributes.tValue.nodeValue);
+        $.ajax({
+            url: "/user/"+e.target.attributes.tValue.nodeValue,
+            type: "get",
+            dataType: "json",
+            contentType : "application/json;charset=utf-8",
+            success: function (data) {
+                $('.update-name').val(data.userName);
+                $('.update-phone').val(data.phone);
+                $('.update-email').val(data.email);
+                if(data.sex !=null){
+                    if(data.sex =='0')
+                        $("#manRadio").attr("checked","checked");
+                    else{
+                        $("#manRadio").removeAttr("checked");
+                        $("#manRadio").parent().next().children(":radio").attr("checked","checked");
+                    }
+                }
+            }
+        });
+    });
+    function deleteUser(userId){
+        $.ajax({
+            url:"/user/"+userId,
+            type:"delete",
+            success:function (data) {
+                window.location.reload();
+            },
+            error:function (data) {
+
+            }
+        });
+    };
+    function update() {
+        $('.update-form').submit();
+    }
+</script>
+</html>

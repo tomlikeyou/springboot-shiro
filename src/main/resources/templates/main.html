@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>qy首页</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <script th:src="@{/js/jquery-2.2.4.js}"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/ztree/zTreeStyle.css}"/>
+    <script th:src="@{/ztree/jquery.ztree.all.min.js}"></script>
+    <script th:src="@{/ztree/jquery.ztree.core.min.js}"></script>
+    <script th:src="@{/ztree/jquery.ztree.excheck.min.js}"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">Logo</a>
+    <!-- Links -->
+    <ul class="navbar-nav">
+        <!-- Dropdown -->
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                <img th:src="@{/images/user.png}" alt="user" style="width: 20px; height: inherit;">
+                <shiro:authenticated>
+                    <shiro:principal/>
+                </shiro:authenticated>
+
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Link 1</a>
+                <a class="dropdown-item" href="#">Link 2</a>
+                <a class="dropdown-item" href="/user/logout">退出登录</a>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div>
+                <ul class="ztree" id="ztreedemo">
+                </ul>
+            </div>
+        </div>
+        <!--内容显示栏-->
+        <!--<div class="col-md-10 formBox" id="selUser">
+            <div class="row bg-warning" style="height: 140px;">
+                <form class="form-inline" action="/user/findUsersWithLike" method="get">
+                    <div class="form-group">
+                        <label for="user">用户名:</label>&nbsp;&nbsp;
+                        <input type="text" name="userName" class="form-control" id="user">
+                    </div>&nbsp;&nbsp;
+                    <div class="form-group">
+                        <label for="status">用户状态:</label>&nbsp;&nbsp;
+                        <select class="form-control" id="status" name="status">
+                            <option>正常</option>
+                            <option>停用</option>
+                        </select>
+                    </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="form-group" style="width: 180px;">
+                        <label for="sel1">所在部门:</label>
+                        <select class="form-control" name="deptId" id="sel1" style="width: 100px;">
+                            <option value="">1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="row" style="height: 60%;">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>col1</th>
+                        <th>col2</th>
+                        <th>col3</th>
+                        <th>col4</th>
+                        <th>col5</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr id="users">
+                        <td>1</td >
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-info">修改</button>
+                            <button type="button" class="btn btn-danger">删除</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-info">修改</button>
+                            <button type="button" class="btn btn-danger">删除</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-info">修改</button>
+                            <button type="button" class="btn btn-danger">删除</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row bg-dark" style="height: 8%">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </div>
+        </div>-->
+    </div>
+</div>
+</body>
+<script>
+    var setting;
+    setting = {
+        view: {
+            selectedMulti: false,
+            showLine: false
+        },
+        data: {
+            key: {
+                name: "menuName",
+                children: "childrenList"
+            },
+            simpleData: {
+                enable: true,
+                idKey: "menuId",
+                pIdKey: "parentId",
+                rootPId: 0
+            }
+        },
+        check: {
+            enable: true,  //true false 分别表示 显示 、不显示 复选框或单选框
+            chkboxType: {"Y": "s", "N": "ps"} //选择复选框后对父子级关系是否影响
+        },
+        callback: {
+            //点击复选框之后调用函数
+            onCheck: zTreeOnCheck
+        }
+    };
+
+    var ztreeObj;
+    $(function () {
+        var zNodes;
+        $.ajax({
+            url: "/menus",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                ztreeObj = $.fn.zTree.init($("#ztreedemo"), setting, data);
+                var trreobj = $.fn.zTree.getZTreeObj("ztreedemo");
+
+                var nodes2 = ztreeObj.getNodesByParam("level", 1);
+                for (var j = 0; j < nodes2.length; j++) {
+                    ztreeObj.removeChildNodes(nodes2[j]);
+                }
+            },
+            error: function () {
+                alert("出错了");
+            }
+        });
+        $('.formBox').css('display','none');
+    });
+
+    function zTreeOnCheck(event, treeId, treeNode) {
+        switch (treeNode.menuId) {
+            case 31:
+                // $("#selUser").css('display','block');
+                /*$.ajax({
+                    url :"/user/findUsersWithLike",
+                    type : "get",
+                    dataType :"json",
+                    success :function(result){
+                       var str='<tr>';
+                       $.each(result.data,function (i, element) {
+                            str+='<td>'+element.userName+'</td>';
+                            str+='<td>'+element.status+'</td>';
+                            str+='<td>'+element.sex+'</td>';
+                            str+='<td>'+element.email+'</td>';
+                            str+='<td>'+element.phone+'</td>';
+                       });
+                       str+='</tr>';
+                       $('#selUser')
+                    },
+                    error : function(result){
+                        alert("查询有问题");
+                    }
+                });*/
+                window.location.href="/users";
+                break;
+            default:
+                // $("#selUser").css('display','none');
+                break;
+        }
+    };
+</script>
+</html>

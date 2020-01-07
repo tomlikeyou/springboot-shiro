@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dy.mapper.UserMapper">
+
+    <resultMap id="userAndDept" type="com.dy.entity.User">
+        <id property="userId" column="userId"></id>
+        <result column="userName" property="userName"></result>
+        <result column="email" property="email"></result>
+        <result column="phone" property="phone"></result>
+        <result column="deptId" property="deptId"></result>
+        <result column="sex" property="sex"></result>
+        <result column="status" property="status"></result>
+        <association property="dept" javaType="com.dy.entity.Dept">
+            <result column="deptName" property="deptName"></result>
+        </association>
+    </resultMap>
+
+    <select id="findUsers" parameterType="java.util.Map" resultMap="userAndDept">
+        select u.*,d.deptName from sys_user u,sys_dept d where u.deptId=d.deptId
+        <if test="userName!=null and  userName!=''">
+            AND userName like concat('%',#{userName},'%')
+        </if>
+        <if test="status!=null and status!=''">
+            AND u.status =#{status}
+        </if>
+        <if test="deptId!=null and deptId!=''">
+            AND u.deptId=#{deptId}
+        </if>
+    </select>
+    <select id="findStatus" resultType="string">
+        select distinct status from sys_user
+    </select>
+    <select id="findUsersWithLike" parameterType="user" resultMap="userAndDept">
+        select u.*,d.deptName from sys_user u,sys_dept d where u.deptId=d.deptId
+        <if test="userName!=null and  userName!=''">
+            AND userName like concat('%',#{userName},'%')
+        </if>
+        <if test="status!=null and status!=''">
+            AND u.status =#{status}
+        </if>
+        <if test="deptId!=null and deptId!=''">
+            AND u.deptId=#{deptId}
+        </if>
+    </select>
+
+    <select id="findAllRoleNames" resultType="java.lang.String">
+        select roleName from sys_role
+    </select>
+
+    <select id="findRoleNameByUserName" parameterType="java.lang.String" resultType="java.lang.String">
+       select r.roleName from sys_user u
+        left join sys_user_role ur on u.userId=ur.userId
+        LEFT JOIN sys_role r on ur.roleId=r.roleId where u.userName=#{userName}
+    </select>
+
+    <select id="findUserByUserName" parameterType="java.lang.String" resultType="user">
+        select  * from sys_user where userName=#{userName}
+    </select>
+
+    <update id="updateUser" parameterType="user">
+        update sys_user set  userName = #{userName},sex= #{sex},phone =#{phone},email =#{email} where userId=#{userId}
+    </update>
+    <update id="modifyUser" parameterType="java.lang.Integer">
+        update sys_user set deleteFlag ='0' where userId=#{userId}
+    </update>
+    <delete id="deleteUser">
+        update sys_user set deleteFlag=#{deleteFlag}
+    </delete>
+
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="userId" parameterType="user">
+        insert into sys_user (userName,password,email,phone,sex,createBy,createTime) values (#{userName},#{password},#{email},#{phone},#{sex},#{createBy},#{createTime})
+    </insert>
+</mapper>

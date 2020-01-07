@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dy.mapper.RoleMapper">
+    <select id="selectRolesBy"  resultType="role">
+        select * from sys_role where 1=1
+        <where>
+            <if test="roleName!=null and  roleName!=''">
+                and roleName like contact("%",#{roleName},"%")
+            </if>
+        </where>
+    </select>
+
+    <select id="getRolesByUserName" resultType="role" >
+        select roleId,roleName from sys_role where uId =(select userId from sys_user where userName=#{userName})
+    </select>
+    <update id="updateRole" parameterType="role">
+        update role set roleName=#{roleName} ,remark=#{remark},updateTime=#{updateTime} where roleId=#{roleId}
+    </update>
+    <insert id="insertRole" parameterType="role">
+        insert into role (roleName,createBy,createTime) values(#{roleName},#{createBy},#{createTime})
+    </insert>
+    <delete id="deleteRole" parameterType="java.lang.Integer">
+        update role set deleteFlag ='0' where roleId=#{roleId}
+    </delete>
+</mapper>

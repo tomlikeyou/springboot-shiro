@@ -1,0 +1,285 @@
+.breadcrumb-item:first-child {
+	margin-left: 200px;
+}
+
+nav {
+	background-color: #8FBC8F;
+	width: 200px;
+	height: 400px;
+}
+
+.navbar-nav {
+	border-radius: 5%;
+}
+
+li.nav-item {
+	/*margin-bottom: 2px;*/
+	border-radius: inherit;
+	height: 50px;
+	border-bottom: 1px solid black;
+}
+
+ul>li.nav-item:hover {
+	background-color: #007bff;
+	color: black;
+}
+
+.container {
+	position: relative;
+	top: -395px;
+	left: 20px;
+}
+
+.form-group {
+	display: inline-block;
+	margin-left: 30px;
+	width: 200px;
+}
+
+.form-group:first-child {
+	margin-left: 0px;
+}
+
+.form-control {
+	width: 200px;
+}
+td#hidTd {
+	display: none;
+}
+/* 
+
+#top {
+	width: 100%;
+	height: 45px;
+	background: #fff;
+}
+
+.search {
+	width: auto;
+	height: 116px;
+	background: #DAA520;
+	position: relative;
+	margin-bottom: 2px;
+}
+
+.search .search-main {
+	width: 999px;
+	height: 110px;
+	background: #fff;
+	position: absolute;
+	border: 0.5px solid black;
+	left: 235px;
+	bottom: 2px;
+}
+
+.search .search-main .search-body {
+	width: auto;
+	min-width: 980px;
+	height: 99px;
+	background: #7FFF00;
+	margin: 4px 0px;
+}
+
+.search-body form .formsearch1, .formsearch2, .formsearch3, .formsearch4
+	{
+	position: relative;
+	width: 250px;
+	height: 40px;
+	display: inline-block;
+	background: #A9A9A9;
+	margin-right: 28px;
+	border: 1px solid black;
+	top: 8px;
+	left: 50px;
+}
+
+label {
+	font-weight: bolder;
+	color: Gray;
+}
+
+.formsearch2 label {
+	display: inline-block;
+	width: 60px;
+	height: 50px;
+}
+
+.formsearch3 {
+	width: 60px;
+	height: 30px;
+	text-align: center;
+	border-radius: 20%;
+}
+
+.formsearch3>input[type="submit"] {
+	font-size: 15px;
+	font-weight: bold;
+	background: #A9A9A9;
+	margin-top: 5px;
+}
+
+div label {
+	width: 30px;
+	text-align: center;
+}
+
+.content {
+	width: auto;
+	height: 465px;
+	min-height: 450px;
+	background: #ADD8E6;
+}
+
+.content>.content-nav {
+	width: 118px;
+	height: inherit;
+	background: #ccc;
+	display: inline-block;
+	margin-right: 10px;
+	float: left;
+	text-align: center;
+}
+
+.conten-nav .nav-group:first-child {
+	margin-top: 5px;
+}
+
+.content-nav .nav-group {
+	width: inherit;
+	height: 50px;
+	margin-bottom: 9px;
+	background: #ddd;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+.content-nav .nav-group>li {
+	width: 100%;
+	height: inherit;
+	border: 1px solid black;
+	font-size: 15px;
+	background: orange;
+	font-weight: bold;
+	border-radius: 30%;
+}
+
+.content-nav .nav-group>li>a {
+	width: 100%;
+	height: inherit;
+	display: inline-block;
+	color: white;
+	border-radius: 30%;
+	padding-top: 13px;
+	box-sizing: border-box;
+}
+
+.content-nav .nav-group>li>a:hover {
+	color: white;
+	background: purple;
+}
+
+.content .content-main {
+	width: 1130px;
+	height: 460px;
+	background: #fff;
+	position: relative;
+	left: 189px;
+	display: inline-block;
+	float: right;
+	position: relative;
+	right: 240px;
+}
+
+.content-main .content-body {
+	width: 98%;
+	height: 98%;
+	margin-left: 10px;
+	margin-top: 10px;
+	background: #FFF8DC;
+}
+
+.content-body #student {
+	width: 100%;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+}
+
+#student td, th {
+	font-size: 1em;
+	border: 1px solid #98bf21;
+	padding: 3px 7px 2px 7px;
+}
+
+#student th {
+	font-size: 1.1em;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background: #A7C942;
+	color: #fff;
+}
+
+#student tbody td {
+	font-size: 1.1em;
+	font-weight: bold;
+	text-align: center;
+}
+
+#student tbody td a:hover {
+	background: purple;
+	color: white;
+}
+
+添加学生界面
+.container {
+	width: 1230px;
+	height: 800px;
+}
+
+.container-top {
+	width: inherit;
+	height: 89px;
+	background: #A9A9A9;
+	margin-bottom: 2px;
+}
+
+.container .container-content {
+	width: auto;
+	height: 500px;
+	min-height: 450px;
+	background: #fff;
+}
+
+.container-content .content-main {
+	width: 90%;
+	height: 559px;
+	background: #BDB76B;
+	margin-left: 235px;
+}
+
+.content-main>.content-body {
+	width: inherit;
+	height: inherit;
+	margin-right: 56px;
+	margin-left: 0px;
+	background: #FFF8DC;
+}
+
+#form {
+	width: 560px;
+	height: inherit;
+	margin-left: 40px;
+	background: #ccc;
+	position: relative;
+}
+
+#form div {
+	width: inherit;
+	height: 70px;
+	margin-bottom: 2px;
+	position: absolute;
+	left: 20px;
+}
+
+li {
+	height: display: inline-block;
+} */
