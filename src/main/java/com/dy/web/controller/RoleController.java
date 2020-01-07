@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 /**
- * @author 黄俊
+ * @author huang
  * @date 2019/10/31 14:56
  * @Disc
  **/

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * @author 黄俊
+ * @author huang
  * @date 2019/10/31 15:41
  * @Disc
  **/

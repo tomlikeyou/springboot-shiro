@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 /**
- * @author 黄俊
+ * @author huang
  * @date 2019/10/31 16:43
  * @Disc
  **/
